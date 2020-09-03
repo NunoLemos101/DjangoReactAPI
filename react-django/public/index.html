@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#4285f4"> 
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Fontawsome CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Index CSS -->
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/scss" href="index.scss">
+   
+        <title>Django blog</title>
+
+
+</head>
+<body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="#">Django Blog</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="#">Home </a>
+              <a class="nav-item nav-link" href="#">About</a>
+
+            </div>
+            
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+
+                <a class="nav-item nav-link" href="#">My Posts</a>
+                <a class="nav-item nav-link" href="#">New Post</a>
+                <a class="nav-item nav-link" href="#">Profile</a>
+                <a class="nav-item nav-link" style="margin-right:10px" href="#">Logout</a>
+                <a href="#"><img class="mt-1 bord" height="36" width="36" src="https://i.pinimg.com/originals/bc/78/17/bc7817a67060c1b57905b3e959db208e.jpg"></img></a>
+ 
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+  <!-- {% block content %} -->
+
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-8">
+
+        <ul class="demo">
+          
+    
+        
+        <div id="notifications-react"></div>
+            
+
+        </ul>
+      </div>
+      <div class="col-md-4" data-selected="notifications" data-notifications="5" data-view="home" id="sidebar-react"><div>-->
+      
+      </div>
+    </main>
+
+<!-- Tweet Modal -->
+    <form>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div style="border:none" class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" >New Tweet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Title:</label>
+                    <input type="text" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="message-text" class="col-form-label">Content:</label>
+                    <textarea style="height:300px" class="form-control"></textarea>
+                  </div>
+                </form>
+              </div>
+              <div style="background-color:#49a1ff;" class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button"class="btn btn-light" data-dismiss="modal">Tweet</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+<div id="myModal" class="modal fade">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="icon-box">
+					<i class="fa fa-check"></i>
+				</div>				
+				<h4 class="modal-title w-100">Awesome!</h4>	
+			</div>
+			<div class="modal-body">
+				<p style="letter-spacing: 1px;" class="text-center">Your profile has been successfully updated.</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+	</div>
+</div>   
+

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div data-username={{username}} id="profile-react"></div>
+
+{% endblock content %}
+
+{% block sidebar %}
+    <div class="col-md-4" 
+    data-username={{ username }} 
+    data-notifications={{ notification_count }} 
+    data-isOwner={{ is_owner }} 
+    id="sidebar-react"><div>
+{% endblock sidebar %}
