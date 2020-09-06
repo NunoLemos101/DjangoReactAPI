@@ -27,7 +27,6 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_following_count(self , profile):
         return FollowRequest.objects.filter(sender=profile.user , accepted=True).count()
 
-
 class ProfileWithEmailSerializer(serializers.ModelSerializer):
     first_name = serializers.SerializerMethodField()
     last_name = serializers.SerializerMethodField()

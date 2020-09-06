@@ -29,11 +29,12 @@ class PostSerializer(serializers.ModelSerializer):
 class PostCreateSerializer(serializers.ModelSerializer):
     author = ProfileSerializer(source="author.profile" , read_only=True)
     likes = serializers.SerializerMethodField(read_only=True)
+    image = serializers.SerializerMethodField(read_only=True)
     is_liked = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Post
-        fields = ['author' , 'id' , 'title' , 'content' , 'likes' , 'is_liked' , 'date_posted']
+        fields = ['author' , 'id' , 'title' , 'content' , 'likes' , 'is_liked' , 'date_posted' , 'image']
 
     def get_likes(self , post):
         return post.likes.count()
@@ -44,6 +45,8 @@ class PostCreateSerializer(serializers.ModelSerializer):
             return True
         else:
             return False 
+    def get_image(self , post):
+        return post.author.profile.image.url
 
     def get_author(self , post):
         return post.author.id
@@ -93,3 +96,53 @@ class PostLikeSerializer(serializers.Serializer):
 class FollowUnfollowRequestSerializer(serializers.Serializer):
     receiver_id = serializers.IntegerField()
     content = serializers.CharField(allow_blank=True , required=False)
+
+class FollowRequestForNotificationsSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = FollowRequest
+        fields = ['accepted' , 'id']
+
+class FollowNotificationSerializer(serializers.ModelSerializer):
+    sender = ProfileSerializer(source="sender.profile" , read_only=True)
+    sender_image = serializers.SerializerMethodField(read_only=True)
+    receiver = ProfileSerializer(source="receiver.profile" , read_only=True)
+    follow_request = FollowRequestForNotificationsSerializer(read_only=True)
+    notification_type = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = FollowNotification
+        fields = ['sender' , 'receiver' , 'follow_request' , 'timestamp' , 'viewed' , 'notification_type' , 'sender_image' , 'id']
+
+    def get_sender_image(self , obj):
+        return obj.sender.profile.image.url
+
+    def get_notification_type(self , obj):
+        return 'follow'
+
+class PostForNotificationsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Post
+        fields = ['id']
+
+class LikeNotificationSerializer(serializers.ModelSerializer):
+    sender = ProfileSerializer(source="sender.profile" , read_only=True)
+    sender_image = serializers.SerializerMethodField(read_only=True)
+    receiver = ProfileSerializer(source="receiver.profile" , read_only=True)
+    post = PostForNotificationsSerializer(read_only=True)
+    notification_type = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = LikeNotification
+        fields = ['sender' , 'receiver' , 'post' , 'timestamp' , 'viewed' , 'notification_type' , 'sender_image']
+
+    def get_sender_image(self , obj):
+        return obj.sender.profile.image.url
+
+    def get_notification_type(self , obj):
+        return 'like'
+
+class FollowRequestActionSerializer(serializers.Serializer):
+    id = serializers.IntegerField(required=True)
+    action = serializers.ChoiceField(['accept' , 'deny'] , required=True)

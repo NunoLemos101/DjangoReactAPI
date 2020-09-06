@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from Posts.models import FollowNotification , LikeNotification
+from django.contrib.auth.decorators import login_required , permission_required
 
 # Create your views here.
 
-
+@login_required    
 def home_view(request):
     React_Dataset = {
         'sidebar_option' : 'latestPosts',
@@ -19,7 +20,7 @@ def home_view(request):
         } 
     return render(request, 'pages/home.html', React_Dataset)
 
-
+@login_required    
 def notifications_view(request):
     React_Dataset = {
         'sidebar_option' : 'notifications',
@@ -34,7 +35,7 @@ def notifications_view(request):
         
     return render(request, 'pages/notifications.html', React_Dataset)
 
-
+@login_required    
 def messages_view(request):
     React_Dataset = {
         'sidebar_option' : 'messages',
@@ -50,7 +51,7 @@ def messages_view(request):
         }
     return render(request, 'pages/messages.html', React_Dataset)
 
-
+@login_required    
 def post_detail_view(request, pk):
     if request.user:
         follow_notification_count = FollowNotification.objects.filter(receiver=request.user , viewed=False).count()

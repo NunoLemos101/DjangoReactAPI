@@ -1,0 +1,10 @@
+       <AppBar style={{backgroundColor : "#007bff"}} position="static">
+          <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+          <span className={"mt-2 ml-3 mr-1"}>
+                <Badge badgeContent={5} color="secondary"></Badge>
+              </span>
+            <Tab label="Follow Notifications " {...a11yProps(0)} />
+
+            <Tab label="Like Notifications" {...a11yProps(1)} />
+          </Tabs>
+        </AppBar>

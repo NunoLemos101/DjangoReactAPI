@@ -481,3 +481,14 @@ cursor: pointer;
 .sidebar-selected:hover {
   color: white;
 }
+
+.name-link {
+  text-decoration: none;
+  color: #252525;
+  transition: 100ms;
+}
+
+.name-link:hover {
+  text-decoration: none;
+  color: #007bff;
+}

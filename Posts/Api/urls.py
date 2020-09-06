@@ -13,5 +13,8 @@ urlpatterns = [
     path('profile-follow/' , views.follow_unfollow_view),
     #path('myprofile/' , views.profile_settings_view)
     path('myprofile/' , include(router.urls)),
-    path('notification-count/' , views.get_notification_number_view),
+    path('follow-notifications-data/' , views.get_follow_notifications_view) ,
+    path('like-notifications-data/' , views.get_like_notifications_view) ,
+    path('notification-count/' , views.get_notification_number_view) ,
+    path('follow-notifications-action/' , views.follow_notifications_action) ,
 ]

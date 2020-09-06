@@ -40,3 +40,15 @@ export function apiLikePost(postId , callback) {
 export function apiGetNotificationNumber(callback) {
     getApiJsonData('GET' , '/notification-count/' , callback)
 }
+
+export function apiGetFollowNotificationData(callback) {
+    getApiJsonData('GET' , '/follow-notifications-data/' , callback)
+}
+
+export function apiGetLikeNotificationData(callback) {
+    getApiJsonData('GET' , '/like-notifications-data/' , callback)
+}
+
+export function apiFollowRequestAction(callback , data) {
+    getApiJsonData('POST' , '/follow-notifications-action/' , callback , data)
+}

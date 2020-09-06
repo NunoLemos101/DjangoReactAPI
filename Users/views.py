@@ -5,6 +5,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login , logout
 from Posts.models import FollowNotification , LikeNotification
 from Users.models import Profile , User
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 
@@ -33,12 +35,14 @@ def login_view(request):
         return render(request, "authentication/login.html", context)
     return redirect("/")
 
+@login_required
 def logout_view(request):
     if request.method == "POST":
         logout(request)
         return redirect("/login")
     return render(request , "authentication/logout.html")
 
+@login_required
 def profile_view(request , username):
     if request.user.username == username:
         is_owner = True
@@ -58,6 +62,7 @@ def profile_view(request , username):
         }
     return render(request , 'pages/profile.html' , React_Dataset)
 
+@login_required
 def my_profile(request):
     React_Dataset = {
         'sidebar_option' : 'editprofile',

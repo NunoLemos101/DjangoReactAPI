@@ -2,12 +2,11 @@
 
 {% block content %}
 
-                    <div id="search-nav-bar-react"></div>
-                {% if request.user.is_authenticated %}
-                    <div data-username={{ user.username }} data-imageUrl={{ user.profile.image.url }} id="posts-react"></div>
-                {% else %}
-                    <div id="posts-react"></div>
-                {% endif %}
+               {% if request.user.is_authenticated %}
+
+                <div id="notifications-react"></div>
+
+               {% endif %}
                     
 {% endblock content %}
 

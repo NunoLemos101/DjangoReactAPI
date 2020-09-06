@@ -3,7 +3,16 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
 from Posts.models import Post , LikeNotification , FollowNotification
-from Posts.serializers import AuthorizedProfileSerializer , ProfileSettingsSerializer , ProfileSettingsFormSerializer , PostSerializer , PostLikeSerializer , PostCreateSerializer , FollowUnfollowRequestSerializer
+from Posts.serializers import ( PostSerializer ,
+                                AuthorizedProfileSerializer , 
+                                ProfileSettingsSerializer , 
+                                ProfileSettingsFormSerializer , 
+                                PostLikeSerializer , 
+                                PostCreateSerializer , 
+                                FollowUnfollowRequestSerializer , 
+                                FollowNotificationSerializer , 
+                                LikeNotificationSerializer ,
+                                FollowRequestActionSerializer ,)
 from Users.models import FollowRequest , Profile , User
 from Users.serializers import ProfileWithEmailSerializer
 from functions.posts_pagination import get_paginated_queryset_response
@@ -145,6 +154,41 @@ def follow_unfollow_view(request):
             return Response(AuthorizedProfileSerializer(user_receiver.profile , context={"request_user" : request.user}).data , 200)
         else: return Response({} , 403)
     else: return Response({} , 400)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def follow_notifications_action(request):
+    serializer = FollowRequestActionSerializer(data=request.data)
+    if request.method == "POST" and serializer.is_valid(raise_exception=True):
+        data = serializer.validated_data
+        id = data.get('id')
+        action = data.get('action')
+        follow = FollowNotification.objects.get(pk=id)
+        if request.user == follow.receiver:
+            if action == 'accept':
+                follow.follow_request.accepted = True
+                follow.save()
+                follow.follow_request.save()
+                return Response(FollowNotificationSerializer(follow).data , 200)
+            elif action == 'deny':
+                follow.follow_request.delete()
+                follow.delete()
+                return Response({'message' : 'Action completed successfully'} , 200)
+
+
+    return Response(FollowRequestActionSerializer().data)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_follow_notifications_view(request):
+    queryset = FollowNotification.objects.filter(receiver=request.user).order_by('-timestamp')
+    return Response(FollowNotificationSerializer(queryset , many=True).data , 200)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_like_notifications_view(request):
+    queryset = LikeNotification.objects.filter(receiver=request.user).order_by('-timestamp')
+    return Response(LikeNotificationSerializer(queryset , many=True).data , 200)
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])

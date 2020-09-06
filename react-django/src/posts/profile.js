@@ -24,7 +24,7 @@ export function Profile(props) {
         apiSingleProfile(handleSingleProfileLookup , `${props.username}/`)
         
     } , [props.profile])
-    
+  
     return <React.Fragment>{profileItSelf.map((item, index)=> {
         return  <div key={index} className="content-section">
                   <div className="media">
