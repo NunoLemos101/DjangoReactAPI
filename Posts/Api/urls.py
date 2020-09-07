@@ -17,4 +17,6 @@ urlpatterns = [
     path('like-notifications-data/' , views.get_like_notifications_view) ,
     path('notification-count/' , views.get_notification_number_view) ,
     path('follow-notifications-action/' , views.follow_notifications_action) ,
+    path('latest-messages/' , views.get_latest_messages_view) ,
+    path('private-message/' , views.get_private_message_view) ,
 ]

@@ -6,6 +6,9 @@ import { SearchNavBar } from './search_nav_bar'
 import { PostForm } from './post_form'
 import { SideBar } from './side_bar'
 import { Notifications } from './notifications'
+import { AllMessages } from './all_messages'
+import { SideBarMessages } from './side_bar_messages'
+import { Message } from './message'
 
 export function PostsComponent(props) {
     const [newPosts , setNewPosts] = useState([])
@@ -43,4 +46,16 @@ export function SideBarComponent(props) {
 
 export function NotificationsComponent(props) {
     return <Notifications/>
+}
+
+export function MessageComponent(props) {
+    return <Message/>
+}
+
+export function AllMessagesComponent(props) {
+    return <AllMessages/>
+}
+
+export function SideBarMessagesComponent(props) {
+    return <SideBarMessages/>
 }

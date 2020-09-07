@@ -52,3 +52,11 @@ export function apiGetLikeNotificationData(callback) {
 export function apiFollowRequestAction(callback , data) {
     getApiJsonData('POST' , '/follow-notifications-action/' , callback , data)
 }
+
+export function apiGetLatestMessages(callback) {
+    getApiJsonData('GET' , '/latest-messages/' , callback)
+}
+
+export function apiGetPrivateMessages(callback , data) {
+    getApiJsonData('GET' , '/private-message/' , callback , data)
+}

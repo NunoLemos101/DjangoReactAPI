@@ -51,6 +51,13 @@ def messages_view(request):
         }
     return render(request, 'pages/messages.html', React_Dataset)
 
+@login_required
+def private_message_view(request , username):
+    react_Dataset = {
+        'username' : username
+    }
+    return render(request , 'pages/private_message.html' , react_Dataset)
+
 @login_required    
 def post_detail_view(request, pk):
     if request.user:

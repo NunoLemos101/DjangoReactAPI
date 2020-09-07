@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from Users.serializers import ProfileSerializer , ProfileWithEmailSerializer
 from Users.models import Profile , FollowRequest
-from .models import Post , LikeNotification , FollowNotification
+from .models import Post , Message , LikeNotification , FollowNotification
+from django.db.models import Q
 
 class PostSerializer(serializers.ModelSerializer):
     author = ProfileSerializer(source="author.profile" , read_only=True)
@@ -146,3 +147,34 @@ class LikeNotificationSerializer(serializers.ModelSerializer):
 class FollowRequestActionSerializer(serializers.Serializer):
     id = serializers.IntegerField(required=True)
     action = serializers.ChoiceField(['accept' , 'deny'] , required=True)
+
+class UsernameFromReactToDjangoSerializer(serializers.Serializer):
+    username = serializers.IntegerField(required=True)
+
+class MessageSerializer(serializers.ModelSerializer):
+    last_message_from_loggedIn_user = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Message
+        fields = ['text' , 'viewed' , 'last_message_from_loggedIn_user']
+
+    def get_last_message_from_loggedIn_user(self , message):
+        loggedIn_user = self.context.get("request_user")
+        if message.sender == loggedIn_user:
+            return True
+        else: return False
+
+
+class LatestMessageSerializer(serializers.ModelSerializer):
+    user = ProfileSerializer(source="user.profile" , read_only=True)
+    latest_message = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = ['id' , 'image' , 'user' , 'latest_message']
+
+    def get_latest_message(self , profile):
+        user = self.context.get('request_user')
+        message = Message.objects.filter(receiver=user , sender=profile.user).last()
+        message = Message.objects.filter(Q(receiver=user , sender=profile.user) | Q(receiver=profile.user , sender=user)).distinct().order_by("-timestamp").first()
+        return MessageSerializer(message , context={"request_user" : user}).data

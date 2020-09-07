@@ -1,15 +1,90 @@
-{% extends 'base.html' %}
+<html>
+<head>    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#4285f4"> 
 
-{% block content %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Fontawsome CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Index CSS -->
+    {% include 'react/css.html' %}
+   
+        <title>Django blog</title>
 
-                    <div id="search-nav-bar-react"></div>
-              
-                    
-{% endblock content %}
 
-{% block sidebar %}
-    <div class="col-md-4" 
-    data-view={{ view }} 
-    data-notifications={{ notification_count }} 
-    data-selected={{ sidebar_option }} 
-    id="sidebar-react"><div>{% endblock sidebar %}
+</head>
+<header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="{% url 'home-view' %}">Django Blog</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{% url 'home-view' %}">Home </a>
+              <a class="nav-item nav-link" href="#">About</a>
+
+            </div>
+            
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+            {% if request.user.is_authenticated %}
+                <a class="nav-item nav-link" href="#">My Posts</a>
+                <a class="nav-item nav-link" href="{% url 'myprofile-view' %}">Profile</a>
+                <a type="submit" class="nav-item nav-link" style="margin-right:10px" href="{% url 'logout-view' %}">Logout</a>
+                <a href="#"><img class="mt-1 bord" height="36" width="36" src={{ request.user.profile.image.url }}></img></a>
+            {% else %}
+                <a class="nav-item nav-link" href="{% url 'login-view' %}">Login</a>
+                <a class="nav-item nav-link" href="{% url 'register-view' %}">Register</a>  
+            {% endif %}              
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+
+
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-8">
+
+        <ul class="demo">
+          
+    
+        
+        <!-- <div id="notifications-react"></div> -->
+        <div id="all-messages-react"></div>
+            
+
+        </ul>
+      </div>
+      
+      <!-- <div class="col-md-4" data-selected="notifications" data-notifications="5" data-view="home" id="sidebar-react"><div> -->
+        <div class="col-md-4">
+          <div class="content-section">
+                    <h3>Messages</h3> 
+                  <p class='text-muted'>You can put any information here you'd like.</p>
+                  <hr></hr> 
+              <ul class="list-group demo">
+
+                <div id="sidebar-messages-react"></div>
+                <br>
+                
+              </ul>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    {% include 'react/base_embed.html' %}
+    {% include 'react/js.html' %}

@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view , permission_classes , authentica
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
-from Posts.models import Post , LikeNotification , FollowNotification
+from Posts.models import Post , Message ,LikeNotification , FollowNotification
 from Posts.serializers import ( PostSerializer ,
                                 AuthorizedProfileSerializer , 
                                 ProfileSettingsSerializer , 
@@ -12,7 +12,9 @@ from Posts.serializers import ( PostSerializer ,
                                 FollowUnfollowRequestSerializer , 
                                 FollowNotificationSerializer , 
                                 LikeNotificationSerializer ,
-                                FollowRequestActionSerializer ,)
+                                FollowRequestActionSerializer ,
+                                LatestMessageSerializer,
+                                UsernameFromReactToDjangoSerializer,)
 from Users.models import FollowRequest , Profile , User
 from Users.serializers import ProfileWithEmailSerializer
 from functions.posts_pagination import get_paginated_queryset_response
@@ -67,6 +69,7 @@ def post_create_view(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def profile_view(request , username):
     if User.objects.filter(username=username).exists():
         user = User.objects.get(username=username)
@@ -202,6 +205,21 @@ def get_notification_number_view(request):
     } 
     return Response(Data , 200)
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_latest_messages_view(request):
+    message_queryset = Message.objects.filter(Q(receiver=request.user) | Q(sender=request.user)).distinct()
+    profile_list = []
+    for message in message_queryset:
+        if message.sender.profile not in profile_list:
+            profile_list.append(message.sender.profile)
+    profile_list.remove(request.user.profile)
+    return Response(LatestMessageSerializer(profile_list , context={'request_user' : request.user} , many=True).data , 200)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_private_message_view(request):
+    return Response({"username" : request.data} , 200)
 
 class ProfileViewSet(viewsets.ModelViewSet):
 
@@ -251,6 +269,5 @@ class ProfileViewSet(viewsets.ModelViewSet):
         return Response({} , status=200)
        
     def get(self , request , *args, **kwargs):
-        print("GET GET GET GET GET GET GET GET GET")
         return Response({} , status=200)
 

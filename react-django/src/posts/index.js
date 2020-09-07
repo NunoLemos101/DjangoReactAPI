@@ -1,3 +1,4 @@
+import { AllMessages } from './all_messages'
 import { BlueLikeDisplay } from './blue_like_display'
 import { FollowUnfollowButton } from './follow_button'
 import { LikeButton } from './like_button'
@@ -19,6 +20,7 @@ import {
 } from './api_requests'
 
 import {
+    AllMessagesComponent
     NotificationsComponent ,
     PostsComponent , 
     ProfileComponent , 
@@ -28,6 +30,8 @@ import {
 } from './components'
 
 export { 
+    AllMessages ,
+    AllMessagesComponent ,
     apiFollowRequest ,
     apiLikePost ,
     apiMyProfile , 

@@ -27,6 +27,7 @@ urlpatterns = [
     path('messages/' , views.messages_view , name="messages-view"),
     path('notifications/' , views.notifications_view , name="notifications-view"),
     path('post/<int:pk>/' , views.post_detail_view),
+    path('message/<str:username>/' , views.private_message_view),
     path('' , include('Users.urls')),
     # Django API Views
     path('api/' , include('Posts.Api.urls')),

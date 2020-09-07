@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import { PostsComponent, ProfileComponent , SearchNavBarComponent , ProfileSettingsComponent , SideBarComponent , NotificationsComponent} from './posts/components'
+import { PostsComponent, ProfileComponent , SearchNavBarComponent , 
+  ProfileSettingsComponent , SideBarComponent , NotificationsComponent , 
+  AllMessagesComponent , SideBarMessagesComponent , MessageComponent } from './posts/components'
 
 const renderReactComponent = React.createElement
 const homeElement = document.getElementById("posts-react")
@@ -11,6 +13,9 @@ const sideBarElement = document.getElementById('sidebar-react')
 const searchNavBarElement = document.getElementById("search-nav-bar-react")
 const profileSettingsElement = document.getElementById("profile-settings-react")
 const notificationsElement = document.getElementById('notifications-react')
+const messageElement = document.getElementById('message-react')
+const allMessagesElement = document.getElementById('all-messages-react')
+const sideBarMessagesElement = document.getElementById('sidebar-messages-react')
 
 const componentsList = [
   [homeElement , PostsComponent] , 
@@ -18,7 +23,10 @@ const componentsList = [
   [notificationsElement , NotificationsComponent] ,
   [searchNavBarElement , SearchNavBarComponent] , 
   [sideBarElement , SideBarComponent] ,
-  [profileSettingsElement , ProfileSettingsComponent]
+  [profileSettingsElement , ProfileSettingsComponent] ,
+  [messageElement , MessageComponent] ,
+  [allMessagesElement , AllMessagesComponent] ,
+  [sideBarMessagesElement , SideBarMessagesComponent]
 ]
 
 componentsList.map(item => {

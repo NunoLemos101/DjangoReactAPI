@@ -10,6 +10,14 @@ class Post(models.Model):
     author = models.ForeignKey(User , on_delete=models.CASCADE)
     likes = models.ManyToManyField(User , related_name="likes" , blank=True)
 
+class Message(models.Model):
+    sender = models.ForeignKey(User , on_delete=models.CASCADE , related_name="user_message_sender")
+    receiver = models.ForeignKey(User , on_delete=models.CASCADE , related_name="user_message_receiver")
+    text = models.TextField(null=False , blank=False)
+    image = models.ImageField(default=None , blank=True)
+    timestamp = models.DateTimeField(default=timezone.now)
+    viewed = models.BooleanField(default=False)
+
 class LikeNotification(models.Model):
     sender = models.ForeignKey(User , on_delete=models.CASCADE , related_name="user_like_sender")
     receiver = models.ForeignKey(User , on_delete=models.CASCADE , related_name="user_like_receiver")
